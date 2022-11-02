@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:mis_libros/pages/login_page.dart';
 import 'package:mis_libros/pages/register_page.dart';
+import 'package:mis_libros/pages/splash_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,7 +18,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.deepPurple,
       ),
-      home: const login(),
+      home: const splash(),
     );
   }
 }
