@@ -29,6 +29,9 @@ class _loginState extends State<login> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                const SizedBox(
+                  height: 16.0,
+                ),
                 Image(image: AssetImage('assets/img/logo.png')),
                 const SizedBox(
                   height: 16.0,
