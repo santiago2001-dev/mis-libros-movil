@@ -3,20 +3,35 @@
 import 'package:firebase_auth/firebase_auth.dart';
 
 class firebase_api{
-Future<bool> RegisterUser(String email,String password) async{
+
+Future<String?> RegisterUser(String email,String password) async{
 
   try{
     final credential = await FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: password);
-    return true;
-  } on FirebaseException   catch(e){
+    return credential.user?.uid;
+  } on FirebaseAuthException   catch(e){
     print(e.code);
-    return false ;
+    return e.code ;
 
-  }catch(e){
-    print(e);
-    return false;
+  }  on FirebaseException catch(e){
+
+    return e.code;
   }
 
+
+}
+
+//login
+Future<String?> Loing(String email,String pass)async{
+  try{
+    final credetial = await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: pass);
+    return credetial.user?.uid;
+
+  }on FirebaseException catch(e){
+    return e.code;
+  }on FirebaseAuthException catch(e){
+    return e.code;
+  }
 
 }
 }

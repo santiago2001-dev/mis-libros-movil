@@ -3,6 +3,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:mis_libros/pages/login_page.dart';
 import 'package:mis_libros/repository/firebase_api.dart';
 import '/models/user.dart';
 import 'dart:convert';
@@ -40,7 +41,14 @@ class _registerState extends State<register> {
 
   registerUser()async{
     var result = await fireapi.RegisterUser(_email.text, _pass.text);
-
+    String msg ="";
+    //validaciones
+    if(result ==  "invalid-email"){msg = "Ingresa un correo electrónico válido";_alert(msg);}else
+    if(result ==  "weak-password"){msg = "Ingresa una contraseña válida de minímo 6 caracteres";_alert(msg);}else
+    if(result ==  "email-already-in-use"){msg = "Correo electrónico ya está registrado";_alert(msg);}else
+    if(result ==  "network-request-failed"){msg = "Sin conexión a internet verfica tú conexión e intenta de nuevo";_alert(msg);}else
+      msg = "usuario agregado de forma correcta";
+    _alert(msg);
   }
   //widget capturar fecha
   void showSelectDate() async{
@@ -87,6 +95,7 @@ _alert(String msg){
         //instancia modelo user
         var user = User(
             _name.text, _pass.text, _email.text, gen, favoritos, dateInitial);
+        Navigator.push(context, MaterialPageRoute(builder: (context)=>login()));
       }else{
         _alert("Contraseña incorrecta");
       }
