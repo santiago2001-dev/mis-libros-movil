@@ -29,7 +29,8 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
-  firebase_core: ^1.19.2
+  firebase_core_platform_interface: 4.5.1
+  firebase_messaging: ^13.0.4
   flutter:
     sdk: flutter
 

@@ -17,7 +17,9 @@ class register extends StatefulWidget {
 enum generos{masculino,femenino}
 
 class _registerState extends State<register> {
+  //instancia metodos auth firebase
   final firebase_api fireapi = firebase_api();
+
   DateTime dateInitial = new DateTime(2022,1,1);
   // info inputs
   final _name = TextEditingController();
@@ -34,6 +36,12 @@ class _registerState extends State<register> {
   bool comedia = false;
   bool drama = false ;
   bool fantasia = false;
+
+
+  registerUser()async{
+    var result = await fireapi.RegisterUser(_email.text, _pass.text);
+
+  }
   //widget capturar fecha
   void showSelectDate() async{
     final DateTime? newDate =  await showDatePicker(
@@ -79,7 +87,6 @@ _alert(String msg){
         //instancia modelo user
         var user = User(
             _name.text, _pass.text, _email.text, gen, favoritos, dateInitial);
-
       }else{
         _alert("Contraseña incorrecta");
       }
@@ -268,6 +275,7 @@ _alert(String msg){
                   ),
                   onPressed: (){
                       capture();
+                      registerUser();
                   },
                 child: const Text('registro'),
                 ),
