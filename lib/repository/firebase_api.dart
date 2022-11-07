@@ -1,0 +1,3 @@
+class firebase_api{
+
+}

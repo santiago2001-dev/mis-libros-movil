@@ -3,6 +3,9 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:mis_libros/repository/firebase_api.dart';
+import '/models/user.dart';
+import 'dart:convert';
 
 class register extends StatefulWidget {
   const register({Key? key}) : super(key: key);
@@ -12,7 +15,9 @@ class register extends StatefulWidget {
 }
 
 enum generos{masculino,femenino}
+
 class _registerState extends State<register> {
+  final firebase_api fireapi = firebase_api();
   DateTime dateInitial = new DateTime(2022,1,1);
   // info inputs
   final _name = TextEditingController();
@@ -29,6 +34,7 @@ class _registerState extends State<register> {
   bool comedia = false;
   bool drama = false ;
   bool fantasia = false;
+  //widget capturar fecha
   void showSelectDate() async{
     final DateTime? newDate =  await showDatePicker(
         context: context,
@@ -45,22 +51,39 @@ class _registerState extends State<register> {
     }
   }
 
-
-
+//alert function
+_alert(String msg){
+    final Scaffold = ScaffoldMessenger.of(context);
+    Scaffold.showSnackBar(
+        SnackBar(content:   Text(msg),
+        action: SnackBarAction(
+            label: "Aceptar",onPressed: Scaffold.hideCurrentSnackBar,
+        ),
+        ),
+    );
+  }
   void capture(){
     setState(() {
-      String gen =  "masculino";
+      if(_pass.text ==_reppass.text) {
+        String gen = "masculino";
+        String favoritos = "";
 
-      if(_gen == generos.femenino){
-        gen = "femenino";
+        if (_gen == generos.femenino) {
+          gen = "femenino";
+        }
+
+
+        if (comedia) favoritos = ("$favoritos : comedia");
+        if (drama) favoritos = ("$favoritos : drama");
+        if (fantasia) favoritos = ("$favoritos : fantasía");
+        //instancia modelo user
+        var user = User(
+            _name.text, _pass.text, _email.text, gen, favoritos, dateInitial);
+
+      }else{
+        _alert("Contraseña incorrecta");
       }
-
-      String  favoritos = "";
-      if(comedia) favoritos = ("$favoritos : comedia");
-      if(drama)favoritos = ("$favoritos : drama");
-      if(fantasia)favoritos = ("$favoritos : fantasía");
-      data = 'name : ${_name.text}\n pass : ${_pass.text}  \n email : ${_email.text} \n genero : $gen \n favoritos : $favoritos date : $dateInitial';
-    });
+      });
   }
   @override
   Widget build(BuildContext context) {
@@ -248,7 +271,7 @@ class _registerState extends State<register> {
                   },
                 child: const Text('registro'),
                 ),
-                Text(data)
+
                 
 
 

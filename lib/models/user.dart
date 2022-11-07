@@ -9,6 +9,23 @@ class User{
 
   User(this._name, this._pass, this._email, this._generos, this._generosFav,
       this._dateBorn);
+//construir JSON con data de entrada
+  User.fromJson(Map<String,dynamic>json)
+      : _name  = json ['name'],
+        _pass = json['pass'],
+        _email  = json ['email'],
+        _generos =json ['generos'],
+        _generosFav = json ['generosFav'];
+
+    //construir Json con data Froms
+  Map<String,double>ToJson()=>{
+       'name': _name,
+        'pass': _pass,
+        'email':_email,
+        'generos': _generos,
+        'generosFav':_generosFav
+  };
+
 
   get name => _name;
 
