@@ -1,20 +1,15 @@
-import 'package:flutter/widgets.dart';
+import 'package:flutter/cupertino.dart';
 
-class home extends StatefulWidget {
+class myhomePage extends StatefulWidget {
+  const myhomePage({Key? key}) : super(key: key);
 
-  const home({Key? key}) : super(key: key);
   @override
-  State<home> createState()=> _homeState();
-
-
+  State<myhomePage> createState() => _myhomePageState();
 }
 
-class _homeState extends State<home>{
+class _myhomePageState extends State<myhomePage> {
   @override
-
-
   Widget build(BuildContext context) {
-    // TODO: implement build
-    throw UnimplementedError();
+    return Container();
   }
 }
