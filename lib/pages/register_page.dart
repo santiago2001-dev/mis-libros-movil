@@ -7,6 +7,7 @@ import 'package:mis_libros/pages/login_page.dart';
 import 'package:mis_libros/repository/firebase_api.dart';
 import '/models/user.dart';
 import 'dart:convert';
+import 'package:intl/intl.dart';
 
 class register extends StatefulWidget {
   const register({Key? key}) : super(key: key);
@@ -18,16 +19,17 @@ class register extends StatefulWidget {
 enum generos{masculino,femenino}
 
 class _registerState extends State<register> {
+
   //instancia metodos auth firebase
   final firebase_api fireapi = firebase_api();
 
-  DateTime dateInitial = new DateTime(2022,1,1);
+  String dateInitial = "";
   // info inputs
   final _name = TextEditingController();
   final _pass = TextEditingController();
   final _email = TextEditingController();
   final  _reppass  =  TextEditingController();
-  String data = '';
+
   //generos
   generos ? _gen  = generos.masculino;
 
@@ -38,18 +40,41 @@ class _registerState extends State<register> {
   bool drama = false ;
   bool fantasia = false;
 
+  //convertir formato de fecha capturada
+  String _dateConvert(DateTime newDate){
+    final DateFormat formatter =  DateFormat('yyyy-MM-dd');
+    final String dateFinal = formatter.format(newDate);
+    return dateFinal;
 
-  registerUser()async{
+  }
+
+//agregar info de usuario en tabla db
+void _addUserDb(User user)async{
+  var result = await fireapi.createUserInDb(user);
+
+  Navigator.pushReplacement(
+      context, MaterialPageRoute(builder: (context)=>login())
+  );
+
+}
+
+//registrar usuario para login
+  registerUser(User user)async{
     var result = await fireapi.RegisterUser(_email.text, _pass.text);
     String msg ="";
     //validaciones
     if(result ==  "invalid-email"){msg = "Ingresa un correo electrónico válido";_alert(msg);}else
     if(result ==  "weak-password"){msg = "Ingresa una contraseña válida de minímo 6 caracteres";_alert(msg);}else
     if(result ==  "email-already-in-use"){msg = "Correo electrónico ya está registrado";_alert(msg);}else
-    if(result ==  "network-request-failed"){msg = "Sin conexión a internet verfica tú conexión e intenta de nuevo";_alert(msg);}else
+    if(result ==  "network-request-failed"){msg = "Sin conexión a internet verfica tú conexión e intenta de nuevo";_alert(msg);}else {
       msg = "usuario agregado de forma correcta";
+      //captura de id
+      user.uid = result;
+      _addUserDb(user);
+    }
     _alert(msg);
   }
+
   //widget capturar fecha
   void showSelectDate() async{
     final DateTime? newDate =  await showDatePicker(
@@ -61,7 +86,7 @@ class _registerState extends State<register> {
 
     if(newDate != null) {
       setState(() {
-        dateInitial = newDate;
+        dateInitial = _dateConvert(newDate);
         btnMss = "fecha de nacimiento : ${dateInitial.toString()}";
       });
     }
@@ -78,6 +103,8 @@ _alert(String msg){
         ),
     );
   }
+
+
   void capture(){
     setState(() {
       if(_pass.text ==_reppass.text) {
@@ -87,21 +114,20 @@ _alert(String msg){
         if (_gen == generos.femenino) {
           gen = "femenino";
         }
-
-
         if (comedia) favoritos = ("$favoritos : comedia");
         if (drama) favoritos = ("$favoritos : drama");
         if (fantasia) favoritos = ("$favoritos : fantasía");
         //instancia modelo user
-        var user = User(
-            _name.text, _pass.text, _email.text, gen, favoritos, dateInitial);
-        Navigator.push(context, MaterialPageRoute(builder: (context)=>login()));
+        var user = User("", _name.text, _pass.text, _email.text, gen, favoritos, dateInitial);
+        //envio data el metodo de registro
+        registerUser(user);
       }else{
-        _alert("Contraseña incorrecta");
+        _alert("Conntraseña no son iguales");
       }
       });
   }
   @override
+
   Widget build(BuildContext context) {
     return Scaffold(
       body:Padding(
@@ -284,7 +310,6 @@ _alert(String msg){
                   ),
                   onPressed: (){
                       capture();
-                      registerUser();
                   },
                 child: const Text('registro'),
                 ),

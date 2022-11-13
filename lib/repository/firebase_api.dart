@@ -1,6 +1,8 @@
 
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:mis_libros/models/user.dart' as userApp;
 
 class firebase_api{
 
@@ -34,4 +36,18 @@ Future<String?> Loing(String email,String pass)async{
   }
 
 }
+
+//add user ind db
+
+Future<String>createUserInDb(userApp.User user ) async{
+  try{
+    final document = await FirebaseFirestore.instance.collection("users").doc(user.uid).set(user.ToJson());
+    return user.uid;
+  }on FirebaseException catch(e){
+    print("FirebaseException ${e.code}");
+    return e.code;
+  }
+}
+
+
 }
