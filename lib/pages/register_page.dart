@@ -119,6 +119,7 @@ _alert(String msg){
         if (fantasia) favoritos = ("$favoritos : fantasía");
         //instancia modelo user
         var user = User("", _name.text, _pass.text, _email.text, gen, favoritos, dateInitial);
+
         //envio data el metodo de registro
         registerUser(user);
       }else{

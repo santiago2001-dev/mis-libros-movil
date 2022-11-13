@@ -26,7 +26,7 @@ class User{
         _generosFav = json ['generosFav'];
 
     //construir Json con data Froms
-  Map<String,double>ToJson()=>{
+  Map<String,dynamic>ToJson()=>{
 
     'uid': _uid,
       'name': _name,

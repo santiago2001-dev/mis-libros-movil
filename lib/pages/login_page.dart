@@ -35,14 +35,23 @@ class _loginState extends State<login> {
     }else {
       var result = await fireapi.Loing(_email.text, _pass.text);
       String msg = "";
-      if(result ==  "invalid-email"){msg = "Ingresa un correo electrónico válido";_alert(msg);}else
-      if(result ==  "wrong-password"){msg = "Contraseña  o correo incorrecto";_alert(msg);}else
-      if(result ==  "network-request-failed"){msg = "Sin conexión a internet verfica tú conexión e intenta de nuevo";_alert(msg);}else
-        msg =  "Usuario correcto";
-      _alert(msg);
-      Navigator.push(context, MaterialPageRoute(builder: (context)=>home()));
 
-
+      if(result ==  "invalid-email"){
+        msg = "Ingresa un correo electrónico válido";
+        _alert(msg);}
+      else if(result ==  "user-not-found"){
+        msg = "Usuario no registrado";
+        _alert(msg);} else if(result ==  "wrong-password"){
+        msg = "Contraseña  o correo incorrecto";_alert(msg);}
+      else if(result ==  "network-request-failed"){
+        msg = "Sin conexión a internet verfica tú conexión e intenta de nuevo";
+        _alert(msg);
+      }else {
+        msg = "Usuario correcto";
+        _alert(msg);
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => const register()));
+      }
     }
   }
   @override

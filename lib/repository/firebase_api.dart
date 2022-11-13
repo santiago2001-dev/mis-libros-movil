@@ -29,13 +29,16 @@ Future<String?> Loing(String email,String pass)async{
     final credetial = await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: pass);
     return credetial.user?.uid;
 
+  } on FirebaseAuthException catch(e){
+    print("error de auth ${e.code}");
+    return e.code;
   }on FirebaseException catch(e){
-    return e.code;
-  }on FirebaseAuthException catch(e){
-    return e.code;
+
+   return e.code;
+   }
   }
 
-}
+
 
 //add user ind db
 
@@ -44,10 +47,9 @@ Future<String>createUserInDb(userApp.User user ) async{
     final document = await FirebaseFirestore.instance.collection("users").doc(user.uid).set(user.ToJson());
     return user.uid;
   }on FirebaseException catch(e){
-    print("FirebaseException ${e.code}");
+    print("FirebaseExceptionestee${e.code}");
     return e.code;
   }
 }
-
-
 }
+
