@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:mis_libros/firebase_options.dart';
 import 'package:mis_libros/pages/login_page.dart';
+import 'package:mis_libros/pages/my_books_page.dart';
 import 'package:mis_libros/pages/register_page.dart';
 import 'package:mis_libros/pages/splash_page.dart';
 
@@ -24,7 +25,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.deepPurple,
       ),
-      home: const splash(),
+      home: const myBooksPage(),
     );
   }
 }
