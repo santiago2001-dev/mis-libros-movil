@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:mis_libros/models/book.dart';
+
+import '../repository/firebase_api.dart';
 
 class newBookpage extends StatefulWidget {
   const newBookpage({Key? key}) : super(key: key);
@@ -10,6 +13,8 @@ class newBookpage extends StatefulWidget {
 }
 
 class _newBookpageState extends State<newBookpage> {
+  final firebase_api fireapi = firebase_api();
+
   final _name = TextEditingController();
   final _author = TextEditingController();
   final _pages = TextEditingController();
@@ -17,8 +22,37 @@ class _newBookpageState extends State<newBookpage> {
   //generos
   bool _accion= false ,_aventura = false ,_cienciaFiccion = false , _drama = false , _romance =  false, _fantasia = false,
   _suspenso = false , _terror = false;
-void _savebook(){
+  _alert(String msg){
+    final Scaffold = ScaffoldMessenger.of(context);
+    Scaffold.showSnackBar(
+      SnackBar(content:   Text(msg),
+        action: SnackBarAction(
+          label: "Aceptar",onPressed: Scaffold.hideCurrentSnackBar,
+        ),
+      ),
+    );
+  }
 
+
+  void _createBook(book Book)async{
+    var result = await fireapi.createBook(Book);
+    _alert("libro creado de forma correcta");
+    Navigator.pop(context);
+
+  }
+void _savebook(){
+setState(() {
+  var generes =  "";
+  if(_accion)  generes = ("$generes : Acción");
+  if(_aventura)  generes = ("$generes : Aventura");
+  if(_cienciaFiccion)  generes = ("$generes : Ciencia Ficción");
+  if(_drama)  generes = ("$generes : Drama");
+  if(_suspenso)  generes = ("$generes : Suspenso");
+  if(_romance)  generes = ("$generes : Romance");
+  if(_fantasia)  generes = ("$generes : Fantasía");
+var Book =  book("",_name.text,_author.text,_pages.text,_rating,generes);
+_createBook(Book);
+});
 }
 
   @override
@@ -56,7 +90,7 @@ void _savebook(){
             controller: _pages,
             decoration : const InputDecoration(
              border : OutlineInputBorder(),labelText : 'paginas',),
-            keyboardType: TextInputType.text,
+            keyboardType: TextInputType.number,
 
           ),
           const SizedBox(

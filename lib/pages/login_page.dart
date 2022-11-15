@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mis_libros/pages/home_page.dart';
+import 'package:mis_libros/pages/my_books_page.dart';
 import 'package:mis_libros/pages/register_page.dart';
 import 'package:mis_libros/repository/firebase_api.dart';
 class login extends StatefulWidget {
@@ -50,7 +51,7 @@ class _loginState extends State<login> {
         msg = "Usuario correcto";
         _alert(msg);
         Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => const register()));
+            context, MaterialPageRoute(builder: (context) => const myBooksPage()));
       }
     }
   }

@@ -4,6 +4,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:mis_libros/models/user.dart' as userApp;
 
+import '../models/book.dart';
+
 class firebase_api{
 
 Future<String?> RegisterUser(String email,String password) async{
@@ -51,5 +53,21 @@ Future<String>createUserInDb(userApp.User user ) async{
     return e.code;
   }
 }
+
+
+Future<String>createBook(book Book)async{
+  try{
+    final uid = FirebaseAuth.instance.currentUser?.uid;
+    final document = await FirebaseFirestore.instance.collection("users").doc(uid).collection("book").doc();
+    Book.id = document.id;
+    final result = await  FirebaseFirestore.instance.collection("users").doc(uid).collection("book").doc(Book.id).set(Book.ToJson());
+    return Book.id;
+
+  }on FirebaseException catch(e) {
+    print(e.code);
+    return e.code;
+    }
+  }
+
 }
 

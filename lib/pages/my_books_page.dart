@@ -1,5 +1,7 @@
 import 'dart:html';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mis_libros/pages/newBookPage.dart';
@@ -16,18 +18,33 @@ class _myBooksPageState extends State<myBooksPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("mis libros"),
+        title: const Text("mis libros"),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8,vertical: 16),
-        child: Column(
-          children: [
-            const SizedBox(
-              height: 16.0,
-            )
-          ],
 
-        ),
+        child:StreamBuilder<QuerySnapshot>(
+          stream: FirebaseFirestore.instance.collection("users")
+              .doc(FirebaseAuth.instance.currentUser?.uid)
+              .collection("book")
+              .snapshots(),
+              builder: (context,snapshot){
+              if(!snapshot.hasData)return const Text("loading");
+              return ListView.builder(
+                  itemCount: snapshot.data?.docs.length,
+                  itemBuilder: (context,index){
+                    QueryDocumentSnapshot book = snapshot.data!.docs[index];
+                    return Card(
+                      child: ListTile(
+                        title: Text(book['name']),
+                        subtitle: Text(book['author']),
+
+                      ),
+                    );
+                  });
+              },
+          
+        )
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: (){
