@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:mis_libros/pages/login_page.dart';
 import 'package:mis_libros/pages/newBookPage.dart';
 
 class myBooksPage extends StatefulWidget {
@@ -12,18 +13,41 @@ class myBooksPage extends StatefulWidget {
   @override
   State<myBooksPage> createState() => _myBooksPageState();
 }
-
+enum Menu {logout}
 class _myBooksPageState extends State<myBooksPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text("mis libros"),
+        actions: [
+          PopupMenuButton(
+            onSelected: (Menu item){
+              setState(() {
+                if(item == Menu.logout){
+                  FirebaseAuth.instance.signOut();
+                  Navigator.pushReplacement(
+                      context, MaterialPageRoute(builder: (context) => const login()));
+                }
+              });
+            },
+              itemBuilder: (BuildContext context)=> <PopupMenuEntry<Menu>>[
+                const PopupMenuItem(
+                value: Menu.logout,
+                child: Text("salir"),
+                ),
+              ]
+
+          )
+        ],
+
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8,vertical: 16),
 
         child:StreamBuilder<QuerySnapshot>(
+
+          //traer data de db
           stream: FirebaseFirestore.instance.collection("users")
               .doc(FirebaseAuth.instance.currentUser?.uid)
               .collection("book")

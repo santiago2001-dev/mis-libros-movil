@@ -1,6 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mis_libros/pages/login_page.dart';
+
+import 'my_books_page.dart';
 
 class splash extends StatefulWidget {
   const splash({Key? key}) : super(key: key);
@@ -20,8 +23,14 @@ void initState() {
 Future<void> _closeSplash() async {
   Future.delayed(const Duration(seconds: 2), () async {
     //redireccion a vista
-    Navigator.push(context, MaterialPageRoute(builder: (context)=> login()));
+   var islogin = FirebaseAuth.instance.currentUser;
+   if(islogin == null) {
+     Navigator.push(context, MaterialPageRoute(builder: (context) => login()));
+   }else{
 
+     Navigator.push(context, MaterialPageRoute(builder: (context) => myBooksPage()));
+
+   }
     });
 
 }
