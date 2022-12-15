@@ -4,6 +4,7 @@ import 'package:mis_libros/firebase_options.dart';
 import 'package:mis_libros/pages/login_page.dart';
 import 'package:mis_libros/pages/my_books_page.dart';
 import 'package:mis_libros/pages/register_page.dart';
+import 'package:mis_libros/pages/searchBookPage.dart';
 import 'package:mis_libros/pages/splash_page.dart';
 
 void main() async {

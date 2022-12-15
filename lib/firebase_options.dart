@@ -62,6 +62,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '280226773868',
     projectId: 'app-libros-85777',
     storageBucket: 'app-libros-85777.appspot.com',
+
+
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
@@ -73,4 +75,6 @@ class DefaultFirebaseOptions {
     iosClientId: '280226773868-frpilmlh26gk5kgo9do5iu1uuanieqce.apps.googleusercontent.com',
     iosBundleId: 'com.example.misLibros',
   );
+
+
 }

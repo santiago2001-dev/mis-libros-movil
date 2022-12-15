@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:mis_libros/pages/home_page.dart';
 import 'package:mis_libros/pages/login_page.dart';
 
 import 'my_books_page.dart';
@@ -28,7 +29,7 @@ Future<void> _closeSplash() async {
      Navigator.push(context, MaterialPageRoute(builder: (context) => login()));
    }else{
 
-     Navigator.push(context, MaterialPageRoute(builder: (context) => myBooksPage()));
+     Navigator.push(context, MaterialPageRoute(builder: (context) => myhomePage()));
 
    }
     });

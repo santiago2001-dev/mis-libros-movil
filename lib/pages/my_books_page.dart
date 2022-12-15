@@ -1,4 +1,4 @@
-import 'dart:html';
+
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -18,30 +18,7 @@ class _myBooksPageState extends State<myBooksPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("mis libros"),
-        actions: [
-          PopupMenuButton(
-            onSelected: (Menu item){
-              setState(() {
-                if(item == Menu.logout){
-                  FirebaseAuth.instance.signOut();
-                  Navigator.pushReplacement(
-                      context, MaterialPageRoute(builder: (context) => const login()));
-                }
-              });
-            },
-              itemBuilder: (BuildContext context)=> <PopupMenuEntry<Menu>>[
-                const PopupMenuItem(
-                value: Menu.logout,
-                child: Text("salir"),
-                ),
-              ]
 
-          )
-        ],
-
-      ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8,vertical: 16),
 

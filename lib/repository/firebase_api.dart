@@ -12,7 +12,9 @@ Future<String?> RegisterUser(String email,String password) async{
 
   try{
     final credential = await FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: password);
+
     return credential.user?.uid;
+
   } on FirebaseAuthException   catch(e){
     print(e.code);
     return e.code ;
@@ -24,6 +26,7 @@ Future<String?> RegisterUser(String email,String password) async{
 
 
 }
+
 
 //login
 Future<String?> Loing(String email,String pass)async{
@@ -48,6 +51,9 @@ Future<String>createUserInDb(userApp.User user ) async{
   try{
     final document = await FirebaseFirestore.instance.collection("users").doc(user.uid).set(user.ToJson());
     return user.uid;
+
+
+
   }on FirebaseException catch(e){
     print("FirebaseExceptionestee${e.code}");
     return e.code;
