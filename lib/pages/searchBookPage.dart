@@ -20,7 +20,7 @@ class _SearchState extends State<Search> {
   List<Items> listBook = <Items>[];
 
   Future _searchBook()async{
-    print(_busqueda.text);
+
   Result restulFutre = await _booksApi.getBoks(_busqueda.text);
   setState(() {
 

@@ -16,7 +16,7 @@ import 'models/local_book.dart';
 
 
 
-void main() async {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform);
@@ -24,6 +24,7 @@ void main() async {
   await Hive.initFlutter();
   Hive.registerAdapter(LocalBookAdapter());
   await Hive.openBox<LocalBook>('favoritos');
+
   runApp(const MyApp());
 }
 
