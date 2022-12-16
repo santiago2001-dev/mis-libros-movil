@@ -6,12 +6,24 @@ import 'package:mis_libros/pages/my_books_page.dart';
 import 'package:mis_libros/pages/register_page.dart';
 import 'package:mis_libros/pages/searchBookPage.dart';
 import 'package:mis_libros/pages/splash_page.dart';
+// main.dart
+
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+
+import 'models/local_book.dart';
+
+
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform
-  );
+    options: DefaultFirebaseOptions.currentPlatform);
+
+  await Hive.initFlutter();
+  Hive.registerAdapter(LocalBookAdapter());
+  await Hive.openBox<LocalBook>('favoritos');
   runApp(const MyApp());
 }
 

@@ -29,6 +29,8 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  hive: ^2.2.3
+  hive_flutter: 1.1.0
   font_awesome_flutter : ^10.1.0
   http : ^0.13.5
   flutter_rating_bar: ^4.0.1
