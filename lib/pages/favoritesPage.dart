@@ -48,9 +48,15 @@ class _favoritesPageState extends State<favoritesPage> {
           ),
           title: Text(book.name ?? "No title"),
           subtitle: Text(
-          book.publishDate ?? "No publishedDate"),
+          " publicado el ${book.publishDate} \n ${book.Description} " ?? "No publishedDate" ),
+          onLongPress: (){
+            setState(() {
+              book.delete();
+            });
+          },
 
           ),
+
 
           );
         },

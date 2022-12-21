@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:mis_libros/pages/books_sotre_page.dart';
 import 'package:mis_libros/pages/favoritesPage.dart';
 import 'package:mis_libros/pages/my_books_page.dart';
 import 'package:mis_libros/pages/searchBookPage.dart';
@@ -31,6 +32,7 @@ class _myhomePageState extends State<myhomePage> {
     pages.add(myBooksPage());
     pages.add(Search());
     pages.add(favoritesPage());
+    pages.add(book_sotre_page());
 
 }
 
@@ -73,6 +75,7 @@ class _myhomePageState extends State<myhomePage> {
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: currentPage,
+        type: BottomNavigationBarType.fixed,
         onTap: (page){
           _onItemTapped(page);
         },
@@ -87,7 +90,10 @@ class _myhomePageState extends State<myhomePage> {
           label: 'Buscar '),
           BottomNavigationBarItem(
               icon: Icon(FontAwesomeIcons.heart,size: 20),
-          label: 'mis favoritos')
+          label: 'mis favoritos'),
+          BottomNavigationBarItem(
+              icon: Icon(FontAwesomeIcons.store,size: 20),
+              label: 'tiendas')
           
         ],
       ),
